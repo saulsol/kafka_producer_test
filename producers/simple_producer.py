@@ -10,7 +10,7 @@ class SimpleProducer:
 
     # 파이선 생성자
     def __init__(self, topic, duration=None):
-        self.topic = topic # self는 this의 개념이라고 이해하면 됩니다.
+        self.topic = topic # self는 this의 개념이라고 이해하면 됩니다. 
         self.duration = duration if duration is not None else 60
         self.conf = {'bootstrap.servers': BROKER_LST}
 
@@ -36,6 +36,14 @@ class SimpleProducer:
                     key=str(cnt),
                     value=f'hello world: {cnt}',
                     on_delivery=self.delivery_callback)
+                # Async(비동기 식 저장)
+                # _ack 응답을 받지 않아도 바로 다음 메세지를 처리할 수 있는 방식
+                # on_delivery 옵션에 지정한 콜백 함수를 (ack응답에 따라 분기 처리 가능) 통하 처리 가능
+
+                ## 메세지 생성자는 버퍼에 메세지를 바로 바로 보내는 것이 아닌
+                # 버퍼에 쌓아 두었다가 보내는 방식으로 진행합니다.
+
+                # 즉 메모리에 쌓아 두었다가 넘기는 방식
 
             except BufferError:
                 sys.stderr.write('%% Local producer queue is full (%d messages awaiting delivery): try again\n' %
