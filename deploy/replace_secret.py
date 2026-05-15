@@ -2,7 +2,7 @@ import yaml
 import os
 
 root_dir = '/src/kafka-producer'
-with open(f'{root_dir}/config/config.yaml', 'r') as config:
+with open(f'{root_dir}/config/application.yml', 'r') as config:
     all_conf_dict = yaml.load(config, Loader=yaml.FullLoader)
 
 for(root, dirs, files) in os.walk(root_dir):
